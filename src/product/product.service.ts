@@ -43,7 +43,7 @@ export class ProductService {
             const params = {
                 TableName: this.tableName,
                 Key:{
-                    maSanPham
+                    "maSanPham" : maSanPham
                 }
             };
 
@@ -53,6 +53,33 @@ export class ProductService {
                 } else {
                     const item = _.get(data, 'Item', new Product('', '', 1));
                     resolve(item)
+                }
+            });
+        });
+    }
+
+    public update(maSanPham: string, product: Product): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            product.maSanPham = maSanPham;
+
+            const params = {
+                TableName: this.tableName,
+                Key: {
+                    "maSanPham": maSanPham
+                },
+                UpdateExpression: "set tenSanPham = :tenSanPham, soLuong = :soLuong",
+                ExpressionAttributeValues: {
+                    ":tenSanPham": product.tenSanPham,
+                    ":soLuong": product.soLuong
+                },
+                ReturnValues: "UPDATED_NEW"
+            };
+
+            this.docClient.update(params, function (err, data) {
+                if (err) {
+                    reject(`Unable to read item. Error JSON: ${JSON.stringify(err, null, 2)}`);
+                } else {
+                    resolve(true)
                 }
             });
         });
