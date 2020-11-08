@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <%- include('includes/style') %>
+
+        <title>Quản lý sản phẩm - Phan Thị Minh Châu</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <%- include('nav') %>
+            <div class="row py-3">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mã SP</th>
+                                <th scope="col">Tên SP</th>
+                                <th scope="col">Số lượng</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% products.forEach(product => { %>
+                            <tr>
+                                <th scope="row"><%= product.maSanPham %></th>
+                                <td><%= product.tenSanPham %></td>
+                                <td><%= product.soLuong %></td>
+                                <td class="text-right">
+                                    <a type="button" 
+                                    href="/products/<%= product.maSanPham %>"
+                                    class="btn btn-sm btn-success">
+                                        Cập nhật
+                                    </a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <%- include('includes/script')%>
+    </body>
+</html>
